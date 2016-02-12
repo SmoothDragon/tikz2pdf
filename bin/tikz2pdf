@@ -1,0 +1,47 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from __future__ import print_function
+
+import argparse
+import os
+import shutil
+import subprocess
+import tempfile
+import sys
+
+import tikz2pdf
+
+parser = argparse.ArgumentParser(description='Command line utility to make standalone PDF files from TikZ code.')
+parser.add_argument('infile', nargs='?', type=argparse.FileType('r'), default=sys.stdin,
+                help='File to read. Uses stdin if no filename is provided.')
+parser.add_argument('--outfile', '-o', type=str, default='texput.pdf',
+                help='File to write. Default output is <infile>.pdf or texput.pdf if no filename is provided.')
+parser.add_argument('--tex', '-t', action='store_true', default=False,
+                help='Only create preview LaTeX file. Output is <infile>.tex or texput.tex.')
+args = parser.parse_args()
+print(args)
+
+if args.infile.name == '<stdin>':
+    basename = 'texput' # Assume generic name if input from <stdin>.
+else:
+    basename = args.infile.name.rsplit('.', 1)[0] # Remove filename extension
+outtex = basename + '.tex'
+outpdf = basename + '.pdf'
+
+# Write output in temporary directory so all intermediate LaTeX files are deleted.
+currdir = os.getcwd()
+tempdir = tempfile.mkdtemp()
+os.chdir(tempdir)
+with open(outtex, 'w') as outfile:
+    for line in tikz2pdf.tikz2tex(args.infile):
+        outfile.write(line)
+if args.tex:
+    shutil.copy(outtex, currdir)
+else:
+    proc = subprocess.Popen(['pdflatex', '-interaction=batchmode', outtex])
+    subprocess.Popen(['pdflatex', '-interaction=batchmode', outtex])
+    proc.communicate()
+
+    shutil.copy(outpdf, currdir)
+shutil.rmtree(tempdir)

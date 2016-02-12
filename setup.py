@@ -35,6 +35,7 @@ setup(
     ],
     package_dir={'tikz2pdf':
                  'tikz2pdf'},
+    scripts=['bin/tikz2pdf'],
     include_package_data=True,
     install_requires=requirements,
     license="ISCL",
