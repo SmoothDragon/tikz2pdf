@@ -6,6 +6,7 @@ Development Lead
 ----------------
 
 * Thomas Draper <draper@idaccr.org>
+* Sandy Kutin   <kutin@idaccr.org>
 
 Contributors
 ------------
