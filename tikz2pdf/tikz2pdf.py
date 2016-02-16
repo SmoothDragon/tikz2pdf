@@ -23,9 +23,6 @@ postscript=r'''\end{preview}
 
 header_flag = '% HEADER '
 
-print(header, end='')
-prescript_done = 0
-
 def tikz2tex(text):
     yield header
     prescript_done = False
