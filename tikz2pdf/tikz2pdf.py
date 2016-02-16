@@ -21,7 +21,7 @@ postscript=r'''\end{preview}
 \end{document}
 '''
 
-header_flag = '% HEADER '
+header_flag = '%!'
 
 def tikz2tex(text):
     yield header
