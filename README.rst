@@ -15,7 +15,7 @@ tikz2pdf
 
 Command line utility to make standalone PDF files from TikZ code.
 
-* Free software: ISC license
+* Free software: GPL license
 * Documentation: https://tikz2pdf.readthedocs.org.
 
 Features
